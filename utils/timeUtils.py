@@ -5,8 +5,6 @@ def getTimeInSecs(time):
     current_datetime = datetime.datetime.now()
     D, t = str(current_datetime).split(" ")
 
-
-
     today = D[-2:]
     tomorrow = D.replace(today,str(int(today)+1))
     # print(tomorrow)
