@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from utils.timeUtils import getTimeInSecs
+import time
 
 def _clickLaterTime(timeOfInterest,courts,wb):
     newCourts =  courts
@@ -60,7 +61,11 @@ def fillPlayerName(wb,tab_window_handles,firstName, lastName):
 def makeBookings(wb,tab_window_handles):
     current_window = wb.current_window_handle
     wb.find_element(By.CLASS_NAME,value="buttong").click()
+    # TODO handle timeout problem
     for tab in tab_window_handles:
         if(current_window!=tab):
+            wb.switch_to.window(tab)
+            # print("switch to tab: ",tab)
+            # time.sleep(2)
             wb.find_element(By.CLASS_NAME,value="buttong").click()
     return

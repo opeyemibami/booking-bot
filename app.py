@@ -13,7 +13,7 @@ config = dotenv_values(".env")
 firstName = "Jack"
 lastName = "kennedy"
 is_tomorrow = True
-timeOfInterest = "14:00"
+timeOfInterest = "18:00"
 booking_hour = "09"
 is_rushHour = True  #09:00
 
