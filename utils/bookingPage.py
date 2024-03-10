@@ -50,13 +50,20 @@ def openTabs(links,wb):
 def fillPlayerName(wb,tab_window_handles,firstName, lastName):
     current_window = wb.current_window_handle
     wb.find_element(By.NAME,value="player2").send_keys(firstName +" "+lastName)
+    # s = wb.find_element(By.NAME,value="player2").text
+    # print(s)
     wb.find_element(By.ID,value="search").click()
-    for tab in tab_window_handles:
-        if(current_window!=tab):
-            wb.switch_to.window(tab)
-            wb.find_element(By.NAME,value="player2").send_keys(firstName +" "+lastName)
-            wb.find_element(By.ID,value="search").click()
-    return 
+    player = wb.find_element(By.ID,value="player2").get_property("value")
+
+    if(player=="No members found"):
+        return False
+    else:
+        for tab in tab_window_handles:
+            if(current_window!=tab):
+                wb.switch_to.window(tab)
+                wb.find_element(By.NAME,value="player2").send_keys(firstName +" "+lastName)
+                wb.find_element(By.ID,value="search").click()
+        return True
 
 def makeBookings(wb,tab_window_handles):
     current_window = wb.current_window_handle
