@@ -1,5 +1,10 @@
-from dotenv import dotenv_values
-config = dotenv_values(".env")
+from dotenv import dotenv_values,find_dotenv,load_dotenv
+env_file = find_dotenv()
+load_dotenv(env_file)
+
+# config = dotenv_values(".env")
+config = dotenv_values(env_file)
+print(config)
 
 def validateBookingHour(booking_hour,t):
     return int(booking_hour)<24 and t<24 

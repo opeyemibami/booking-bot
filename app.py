@@ -2,8 +2,10 @@ from config.getWbInstance import getWB
 import time
 from handler.handlers import bookCourtHandler
 
-from dotenv import dotenv_values
-config = dotenv_values(".env")
+from dotenv import dotenv_values,find_dotenv,load_dotenv
+env_file = find_dotenv()
+load_dotenv(env_file)
+config = dotenv_values(env_file)
 
 wb = getWB()
 
