@@ -3,8 +3,10 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-from dotenv import dotenv_values
-config = dotenv_values(".env")
+from dotenv import dotenv_values,load_dotenv,find_dotenv
+env_file = find_dotenv()
+load_dotenv(env_file)
+config = dotenv_values(env_file)
 
 def getWB():
     chrome_options = wd.ChromeOptions()
