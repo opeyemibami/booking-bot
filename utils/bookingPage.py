@@ -48,6 +48,7 @@ def openTabs(links,wb):
     return  wb.window_handles
 
 def fillPlayerName(wb,tab_window_handles,firstName, lastName):
+    # print(len(tab_window_handles))
     current_window = wb.current_window_handle
     wb.find_element(By.NAME,value="player2").send_keys(firstName +" "+lastName)
     # s = wb.find_element(By.NAME,value="player2").text

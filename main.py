@@ -3,6 +3,7 @@ from handler.handlers import bookCourtHandler
 from config.getWbInstance import getWB
 from validators.validator import validateBookingHour, validateApikey
 import time
+import uvicorn
 
 app = FastAPI()
 
@@ -24,7 +25,7 @@ def bookCourt(response: Response,
               booking_hour ="09"
               ):
     """
-    For effective usage, only send request 5 mins before rush hour
+    For effective usage, only send request 3 mins before rush hour
     """
 
     if(not validateApikey(api_key)):
@@ -51,7 +52,6 @@ def bookCourt(response: Response,
         while(bot_response):
             time.sleep(10)
             wb.quit()
-            break
         return {"message":"Check your email to see booked court if lucky."}
     elif bot_response=="badCredentials":
         response.status_code = status.HTTP_400_BAD_REQUEST
@@ -66,5 +66,4 @@ def bookCourt(response: Response,
 
 # uncomment this for local testing without using docker
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000,reload=True)

@@ -1,5 +1,5 @@
 from selenium import webdriver as wd
-from selenium.webdriver.common.service import Service
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -13,8 +13,7 @@ def getWB():
     chrome_options.add_argument("--disable-dev-shm-usage")
 
     # wb = wd.Chrome() 
-    wb = wd.Chrome() 
-
+    wb = wd.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     wb.implicitly_wait(10)
     wb.get(config["URL"])
     return wb
