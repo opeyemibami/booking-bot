@@ -25,7 +25,7 @@ def bookCourt(response: Response,
               booking_hour ="09"
               ):
     """
-    For effective usage, only send request 3 mins before rush hour
+    For effective usage, only send request 3 mins before rush hour or booking hour!
     """
 
     if(not validateApikey(api_key)):
