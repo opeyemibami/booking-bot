@@ -5,9 +5,6 @@ load_dotenv()
 
 # config = dotenv_values(".env")
 config = dotenv_values(env_file)
-# print(config["ALLOW_USERS"].split("_"))
-print(config)
-print(os.environ['ALLOW_USERS'].split("_"))
 
 
 def validateBookingHour(booking_hour,t):
