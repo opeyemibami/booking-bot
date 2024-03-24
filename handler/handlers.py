@@ -40,5 +40,5 @@ def bookCourtHandler(wb,userId: int,
         return False
     # TODO book at a specific time
     is_booking_time = isTimeToBookByHour(booking_hour=booking_hour)
-    # makeBookings(wb,tab_window_handles)
+    makeBookings(wb,tab_window_handles)
     return True
