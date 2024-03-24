@@ -1,6 +1,4 @@
-from selenium import webdriver as wd
 from selenium.webdriver.common.by import By
-from chromedriver_py import binary_path
 import time
 
 def login(wb,userId,passwd):
