@@ -4,9 +4,11 @@ import time
 def isTimeToBookByHour(booking_hour):
     time_now = datetime.now()
     current_time = time_now.strftime("%H:%M:%S")
-    hour = int(current_time.split(':')[0])  
+    hour = int(current_time.split(':')[0]) 
+    # Spring time (Time moved backward by 1) 
+    booking_hour = int(booking_hour)-1
 
-    while (hour!=int(booking_hour)):
+    while (hour!=booking_hour):
         print("is not booking time yet: ",current_time)
         time_now = datetime.now()
         current_time = time_now.strftime("%H:%M:%S")
