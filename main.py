@@ -1,6 +1,7 @@
 from fastapi import FastAPI,status, Response
 from handler.handlers import bookCourtHandler
 from config.getWbInstance import getWB
+from utils.timeUtils import getSystemTime
 from validators.validator import validateBookingHour, validateApikey
 import time
 import uvicorn
@@ -13,6 +14,13 @@ app = FastAPI()
 def api_home():
     return {"message":"bot is functional and ready to fly 😉"}
 
+
+@app.get("/getSystemTime")
+def api_get_system_time():
+    t = getSystemTime()
+    print(t)
+    return {"message":f"the system time is {t}"}
+
 @app.post("/book-a-court",status_code=200)
 def bookCourt(response: Response,
               api_key:str,
@@ -20,7 +28,8 @@ def bookCourt(response: Response,
               passwd, 
               opponent_firstName: str,
               opponent_lastName: str,
-              book_for_tomorrow=True,
+              is_the_system_time_correct=True,
+              booking_for_tomorrow=True,
               time_of_interest="09:00",
               booking_hour ="09"
               ):
@@ -45,20 +54,23 @@ def bookCourt(response: Response,
         passwd=passwd, 
         opponent_firstName=opponent_firstName,
         opponent_lastName=opponent_lastName,
-        book_for_tomorrow=book_for_tomorrow,
+        is_the_system_time_correct = is_the_system_time_correct.capitalize(),
+        book_for_tomorrow=booking_for_tomorrow.capitalize(),
         time_of_interest=time_of_interest,
         booking_hour =booking_hour)
     if bot_response==True:
         while(bot_response):
-            time.sleep(10)
+            time.sleep(5)
             wb.quit()
-        return {"message":"Check your email to see booked court if lucky."}
+            return {"message":"Check your email to see booked court if lucky."}
     elif bot_response=="badCredentials":
         response.status_code = status.HTTP_400_BAD_REQUEST
         return {"message":"Bad Credentials, please check your login details"}
     elif bot_response=="FalseOpponet":
         response.status_code = status.HTTP_400_BAD_REQUEST
         return {"message":"Opponent does not exist, please confirm opponent name spelling"}
+    elif(bot_response=="tooEarly"):
+        return {"message: Too early, resend request about 3 minute to rush hour"}
     else:
         response.status_code = status.HTTP_200_OK
         return {"message":"So sorry, no court available for your selection"}
