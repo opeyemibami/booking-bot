@@ -9,7 +9,7 @@ def isTimeToBookByHour(booking_hour,is_the_system_time_correct):
     hour = int(current_time.split(':')[0]) 
     if (is_the_system_time_correct=="False"):
         # Winter is here: (Time moved backward by 1) 
-        booking_hour -= 1
+        booking_hour += 1
 
     # Enforcing 5 mins to booking during rush hour
     system_minutes = int(time_now.strftime("%H:%M:%S").split(":")[1])
