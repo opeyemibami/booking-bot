@@ -1,4 +1,5 @@
 import datetime
+import time
 
 def getTimeInSecs(time):
     timeOfInterest = time
@@ -16,3 +17,12 @@ def getTimeInSecs(time):
     timeOfInterestInSecs = str(int(dt2.timestamp()))
 
     return timeOfInterestInSecs
+
+def getSystemTime():
+    """
+    return system time in hour
+    """
+    time_now = datetime.datetime.now()
+    current_time = time_now.strftime("%H:%M:%S")
+    # current_hour = current_time.split(":")[0]
+    return current_time

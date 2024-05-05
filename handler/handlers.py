@@ -4,13 +4,15 @@ from utils.bookingPage import getAvailableCourtsLinks, clickNextCourts, openTabs
 from utils.bookingStart import isTimeToBookByHour
 
 
-def bookCourtHandler(wb,userId: int,
-              passwd, 
-              opponent_firstName: str,
-              opponent_lastName: str,
-              book_for_tomorrow=True,
-              time_of_interest="09:00",
-              booking_hour ="09"
+def bookCourtHandler(wb,
+                    userId: int,
+                    passwd, 
+                    opponent_firstName: str,
+                    opponent_lastName: str,
+                    is_the_system_time_correct:True,
+                    book_for_tomorrow=True,
+                    time_of_interest="09:00",
+                    booking_hour ="09"
               ):
     
     availableCourtsLinks = []
@@ -21,7 +23,8 @@ def bookCourtHandler(wb,userId: int,
     if not loginSuccessfuly:
         wb.quit()
         return "badCredentials"
-    selectBookingDate(wb,is_tomorrow=book_for_tomorrow)
+    
+    bookforTomorrow = selectBookingDate(wb,is_tomorrow=book_for_tomorrow.capitalize())
     # court 1-4
     availableCourtsLinks.extend(getAvailableCourtsLinks(wb,time_of_interest))
     # court 5-8
@@ -38,7 +41,18 @@ def bookCourtHandler(wb,userId: int,
     else:
         # No court available 
         return False
-    # TODO book at a specific time
-    is_booking_time = isTimeToBookByHour(booking_hour=booking_hour)
-    makeBookings(wb,tab_window_handles)
-    return True
+    
+    if(bookforTomorrow):
+        is_booking_time = isTimeToBookByHour(booking_hour=booking_hour,is_the_system_time_correct=is_the_system_time_correct)
+        if(is_booking_time):
+            print("making booking for tomorrow now.......")
+            makeBookings(wb,tab_window_handles)
+            return True
+        else:
+            return "tooEarly"
+        
+    # book today now 
+    else:
+        print("booking court for today now..........")
+        makeBookings(wb,tab_window_handles)
+        return True
